@@ -6,7 +6,7 @@ import logo from '../../assets/SS_Logo.png'
 function NavBar() {
     return (
         <>
-          
+
             <Navbar bg="white">
                 <Container >
                     <Navbar.Brand href="#home">
@@ -20,7 +20,7 @@ function NavBar() {
                     </Navbar.Brand>
                 </Container>
             </Navbar>
-            
+
         </>
     )
 }

@@ -1,16 +1,12 @@
 import React from 'react'
-import BannerImg from '../../assets/SS_Banner.jpg'
+import Login from '../../components/Login/Login'
+import './Banner.css'
 
 function Banner() {
     return (
         <>
-            <div className='col-12 px-0'>
-                <img
-                    src={BannerImg}
-                    className=""
-                    style={{maxWidth: '100%'}}
-                    alt="SS logo"
-                />
+            <div className='banner-container ps-md-5 pb-md-5'>
+                <Login />
             </div>
         </>
     )
