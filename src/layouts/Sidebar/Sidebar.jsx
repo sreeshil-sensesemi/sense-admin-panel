@@ -18,7 +18,7 @@ function Sidebar({ children }) {
     const toggle = () => setIsOpen(!isOpen);
     const menuItem = [
         {
-            path: "/",
+            path: "/admin-panel",
             name: "Dashboard",
             icon: <FaTh />
         },
