@@ -8,7 +8,7 @@ function AdminPanel() {
     return (
         <>
             <Sidebar>
-                {/* <NavBar/> */}
+                <NavBar/>
                 <AdminDashboard />
             </Sidebar>
 

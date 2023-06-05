@@ -32,21 +32,29 @@ function Sidebar({ children }) {
             name: "Patients",
             icon: <FaRegChartBar />
         },
+        // {
+        //     path: "/comment",
+        //     name: "Comment",
+        //     icon: <FaCommentAlt />
+        // },
+        // {
+        //     path: "/product",
+        //     name: "Product",
+        //     icon: <FaShoppingBag />
+        // },
+        // {
+        //     path: "/productList",
+        //     name: "Product List",
+        //     icon: <FaThList />
+        // }
+    ]
+
+    const bottomItem = [
         {
-            path: "/comment",
-            name: "Comment",
-            icon: <FaCommentAlt />
-        },
-        {
-            path: "/product",
-            name: "Product",
-            icon: <FaShoppingBag />
-        },
-        {
-            path: "/productList",
-            name: "Product List",
-            icon: <FaThList />
-        }
+                path: "/logout",
+                name: "Logout",
+                icon: <FaThList />
+            }
     ]
     return (
         <div className="sidebar-container">
@@ -65,6 +73,16 @@ function Sidebar({ children }) {
                         </NavLink>
                     ))
                 }
+
+                {
+                    bottomItem.map((item, index) => (
+                        <NavLink to={item.path} key={index} className="link" activeclassName="active">
+                            <div className="icon" style={{position:"absolute", bottom:0}}>{item.icon}</div>
+                            <div style={{ display: isOpen ? "block" : "none", position:"absolute", bottom:0, marginLeft: "28px" }} className="link_text">{item.name}</div>
+                        </NavLink>
+                    ))
+                }
+           
             </div>
             <main>{children}</main>
         </div>
