@@ -14,21 +14,18 @@ function Login() {
   const navigate = useNavigate();
 
   const { data } = useSelector((state) => state.userLogin)
-  
-  useEffect(() => { 
-    console.log(data);
-    if (data) {
+
+  useEffect(() => {
+   // console.log(data);
+    if (data && data.length != 0) {
       if (data.Status == 'success') {
-        console.log('success');
-        //localStorage.setItem("loginDetails", JSON.stringify(data));
-       navigate('/admin-panel')
+        localStorage.setItem("logged", JSON.stringify(data));
+        navigate('/admin-panel')
       } else if (data.Status == 'failure') {
-        console.log('failure');
         toast.error(data.Message, {
           id: 'logverifyErr'
         })
       } else {
-        console.log('server error');
         toast.error('An error has occurred, please try again', {
           id: 'serverErr'
         })

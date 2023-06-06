@@ -4,32 +4,28 @@ import SearchBar from '../../components/Common/SearchBar'
 import Sidebar from '../../layouts/Sidebar/Sidebar'
 import EnterpriseInfoBox from '../../components/Common/InfoBox'
 import {
-  FaBars,
-  FaUserAlt,
-  FaUserMd,
-  FaHospital,
-  FaHospitalUser
+  FaUserMd
 } from "react-icons/fa";
-import {useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
-function PatientPage() {
+function DoctorPage() {
 
   const navigate = useNavigate();
 
   useEffect(() => {
-      const userData = JSON.parse(localStorage.getItem('logged'));
-      if (!userData) {
-          navigate('/');
-      }
+    const userData = JSON.parse(localStorage.getItem('logged'));
+    if (!userData) {
+      navigate('/');
+    }
   }, []);
 
   return (
     <>
       <Sidebar>
-      <div style={{width:'100%', height: '100%', padding: '30px 0px 30px 0px'}}>
-        <EnterpriseInfoBox text={'Patients'} count={20} Icon={FaHospitalUser} />
-          <SearchBar placeholder={'Patient ID'} />
+        <div style={{ width: '100%', height: '100%', padding: '30px 0px 30px 0px' }}>
+          <EnterpriseInfoBox text={'Doctors'} count={30} Icon={FaUserMd} />
+          <SearchBar placeholder={'Doctor ID'} />
           <PatientTable />
         </div>
       </Sidebar>
@@ -37,4 +33,4 @@ function PatientPage() {
   )
 }
 
-export default PatientPage
+export default DoctorPage;

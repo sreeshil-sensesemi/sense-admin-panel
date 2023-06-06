@@ -7,17 +7,16 @@ function NavBar() {
     return (
         <>
 
-            <Navbar bg="info" >
+            <Navbar bg="white" >
                 <Container >
                     <Navbar.Brand href="#home">
-                        {/* <img
+                        <img
                             src={logo}
                             width="100"
                             height="40"
                             className="d-inline-block align-top"
                             alt="SS logo"
-                        /> */}
-                        <h1 style={{color: 'white', fontSize: '14px'}}>Logout</h1>
+                        />
                     </Navbar.Brand>
                 </Container>
             </Navbar>
