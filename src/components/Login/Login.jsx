@@ -3,7 +3,7 @@ import './Login.css'
 import { useForm } from "react-hook-form";
 import toast from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { userLoginData } from '../../features/WebUser/loginSlice';
 
 function Login() {
@@ -16,7 +16,7 @@ function Login() {
   const { data } = useSelector((state) => state.userLogin)
 
   useEffect(() => {
-   // console.log(data);
+    // console.log(data);
     if (data && data.length != 0) {
       if (data.Status == 'success') {
         localStorage.setItem("logged", JSON.stringify(data));

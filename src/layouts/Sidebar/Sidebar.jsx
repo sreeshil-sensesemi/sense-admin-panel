@@ -44,7 +44,7 @@ function Sidebar({ children }) {
 
     const bottomItem = [
         {
-            //path: "/",
+            path: "/",
             name: "Logout",
             icon: <IoMdLogOut size={18} />
         }
@@ -62,8 +62,8 @@ function Sidebar({ children }) {
 
 
     return (
-        <div className="sidebar-container" style={{ display: "flex", flexDirection: '' }}>
-            <div style={{ width: isOpen ? "200px" : "50px" }} className="sidebar">
+        <div className="sidebar-container" style={{ display: "flex", }}>
+            <div style={{ width: isOpen ? "200px" : "50px", height: '' }} className="sidebar">
                 <div className="top_section" style={{ borderBottom: '1px solid #00A8CA', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '' }}>
                     <img src={logo} width='100' height='40' alt="SS Logo" style={{ display: isOpen ? "block" : "none" }} className="logo" />
                     <div style={{ marginLeft: isOpen ? "50px" : "0px" }} className="bars">
@@ -82,7 +82,7 @@ function Sidebar({ children }) {
 
                     {
                         bottomItem.map((item, idx) => (
-                            <NavLink key={'00'} onClick={handleLogout} className="link" activeclassName="active" style={{ marginTop: '280px', borderRadius: '10px', height: '35px', display: 'flex', alignItems: 'center' }}>
+                            <NavLink to={item.path} key={idx} onClick={handleLogout} className="link" activeclassName="active" style={{ marginTop: '280px', borderRadius: '10px', height: '35px', display: 'flex', alignItems: 'center' }}>
                                 <div className="icon" style={{}}>{item.icon}</div>
                                 <div style={{ display: isOpen ? "block" : "none", fontSize: '14px', fontFamily: 'Poppins', marginTop: '5px' }} className="link_text">{item.name}</div>
                             </NavLink>

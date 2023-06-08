@@ -59,10 +59,10 @@ main {
     font-size: 17px;
 }
 
-.bottom_link {
+/* .bottom_link {
     display: flex;
     color: #00A8CA !important;
     padding: 10px 15px;
     gap: 10px;
     transition: all 0.5s;
-}
+} */
