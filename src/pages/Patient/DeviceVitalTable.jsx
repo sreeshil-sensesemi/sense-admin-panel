@@ -2,7 +2,7 @@ import React from 'react'
 import Table from 'react-bootstrap/Table';
 import { CSVLink } from 'react-csv';
 import { FaFileDownload } from "react-icons/fa";
-
+import Papa from 'papaparse';
 
 function DeviceVitalTable({ data, context }) {
 
@@ -47,10 +47,10 @@ function DeviceVitalTable({ data, context }) {
                 <td>{item.SensePatientID}</td>
                 <td>{item.DeviceID}</td>
                 <td>{item.Date}</td>
-                <td>{item.Date}</td>
+                <td>{item.Time}</td>
                 {renderDynamicColumns(item)}
-                <td><button style={{ color: 'white', padding: '2px 12px', borderRadius: '8px', backgroundColor: 'green', outline: 'none', border: 'none' }}><FaFileDownload /></button></td>
 
+                {/* <td><CSVLink {...csvReport}>CSV</CSVLink></td> */}
             </tr>
         ));
     };
@@ -64,6 +64,7 @@ function DeviceVitalTable({ data, context }) {
                         <td>{item.DiastolicBP}</td>
                         <td>{truncateValues(item.BP_PPG_RED_RawData, 3)}</td>
                         <td>{truncateValues(item.BP_ECG_L1_RawData, 3)}</td>
+                        <td><button onClick={() => handleDownload(item, context)} style={{ color: 'white', padding: '2px 12px', borderRadius: '8px', backgroundColor: 'green', outline: 'none', border: 'none' }}><FaFileDownload /></button></td>
                     </>
                 )
             case 'SPO2':
@@ -72,10 +73,16 @@ function DeviceVitalTable({ data, context }) {
                         <td>{item.calculatedData}</td>
                         <td>{truncateValues(item.PPGRED_RawData, 3)}</td>
                         <td>{truncateValues(item.PPGIR_RawData, 3)}</td>
+                        <td><button onClick={() => handleDownload(item, context)} style={{ color: 'white', padding: '2px 12px', borderRadius: '8px', backgroundColor: 'green', outline: 'none', border: 'none' }}><FaFileDownload /></button></td>
                     </>
                 );
             case 'ECG1':
-                return <td>{truncateValues(item.RawData, 4)}</td>
+                return (
+                    <>
+                        <td>{truncateValues(item.RawData, 4)}</td>
+                        <td><button onClick={() => handleDownload(item, context)} style={{ color: 'white', padding: '2px 12px', borderRadius: '8px', backgroundColor: 'green', outline: 'none', border: 'none' }}><FaFileDownload /></button></td>
+                    </>
+                )
             case 'ECG6':
                 return (
                     <>
@@ -85,6 +92,7 @@ function DeviceVitalTable({ data, context }) {
                         <td>{truncateValues(item.Lead_4_RawData, 3)}</td>
                         <td>{truncateValues(item.Lead_5_RawData, 3)}</td>
                         <td>{truncateValues(item.Lead_6_RawData, 3)}</td>
+                        <td><button onClick={() => handleDownload(item, context)} style={{ color: 'white', padding: '2px 12px', borderRadius: '8px', backgroundColor: 'green', outline: 'none', border: 'none' }}><FaFileDownload /></button></td>
                     </>
                 );
             case 'ECG12':
@@ -102,6 +110,7 @@ function DeviceVitalTable({ data, context }) {
                         <td>{truncateValues(item.Lead_10_RawData, 3)}</td>
                         <td>{truncateValues(item.Lead_11_RawData, 3)}</td>
                         <td>{truncateValues(item.Lead_12_RawData, 3)}</td>
+                        <td><button onClick={() => handleDownload(item, context)} style={{ color: 'white', padding: '2px 12px', borderRadius: '8px', backgroundColor: 'green', outline: 'none', border: 'none' }}><FaFileDownload /></button></td>
                     </>
                 );
             default:
@@ -120,8 +129,110 @@ function DeviceVitalTable({ data, context }) {
         }
     };
 
+    //data export to csv file
+    const handleDownload = (vitalData, context) => {
 
+        const csvData = [];
+        let maxRows;
+        for (let i = 0; i < maxRows; i++) {
+            switch (context) {
+                case 'BP':
+                     maxRows = Math.max(vitalData.BP_PPG_RED_RawData.length, vitalData.BP_ECG_L1_RawData.length);
 
+                    const bprow = {
+                        SensePatientID: i === 0 ? vitalData.SensePatientID : '',
+                        DeviceID: i === 0 ? vitalData.DeviceID : '',
+                        Date: i === 0 ? vitalData.Date : '',
+                        Time: i === 0 ? vitalData.Time : '',
+                        SystolicBP: i === 0 ? vitalData.SystolicBP : '',
+                        DiastolicBP: i === 0 ? vitalData.DiastolicBP : '',
+                        BP_PPG_RED_RawData: vitalData.BP_PPG_RED_RawData[i] !== undefined ? vitalData.BP_PPG_RED_RawData[i] : '',
+                        BP_ECG_L1_RawData: vitalData.BP_ECG_L1_RawData[i] !== undefined ? vitalData.BP_ECG_L1_RawData[i] : ''
+                    };
+                    csvData.push(bprow);
+                    break;
+                case 'SPO2':
+                    maxRows = Math.max(vitalData.PPGRED_RawData.length, vitalData.PPGIR_RawData.length)
+                    const spo2row = {
+                        SensePatientID: i === 0 ? vitalData.SensePatientID : '',
+                        DeviceID: i === 0 ? vitalData.DeviceID : '',
+                        Date: i === 0 ? vitalData.Date : '',
+                        Time: i === 0 ? vitalData.Time : '',
+                        calculatedData: i === 0 ? vitalData.calculatedData : '',
+                        PPGRED_RawData: vitalData.PPGRED_RawData[i] !== undefined ? vitalData.PPGRED_RawData[i] : '',
+                        PPGIR_RawData: vitalData.PPGIR_RawData[i] !== undefined ? vitalData.PPGIR_RawData[i] : ''
+                    };
+                    csvData.push(spo2row);
+                    break;
+                case 'ECG1':
+                    maxRows = Math.max(vitalData.RawData.length)
+
+                    const ecg1row = {
+                        SensePatientID: i === 0 ? vitalData.SensePatientID : '',
+                        DeviceID: i === 0 ? vitalData.DeviceID : '',
+                        Date: i === 0 ? vitalData.Date : '',
+                        Time: i === 0 ? vitalData.Time : '',
+                        RawData: vitalData.RawData[i] !== undefined ? vitalData.RawData[i] : '',
+                    };
+                    csvData.push(ecg1row);
+                    break;
+                case 'ECG6':
+                    maxRows = Math.max(vitalData.Lead_1_RawData.length, vitalData.Lead_2_RawData.length, vitalData.Lead_3_RawData.length, vitalData.Lead_4_RawData.length, vitalData.Lead_5_RawData.length, vitalData.Lead_6_RawData.length)
+
+                    const ecg6row = {
+                        SensePatientID: i === 0 ? vitalData.SensePatientID : '',
+                        DeviceID: i === 0 ? vitalData.DeviceID : '',
+                        Date: i === 0 ? vitalData.Date : '',
+                        Time: i === 0 ? vitalData.Time : '',
+                        Lead_1_RawData: vitalData.Lead_1_RawData[i] !== undefined ? vitalData.Lead_1_RawData[i] : '',
+                        Lead_2_RawData: vitalData.Lead_2_RawData[i] !== undefined ? vitalData.Lead_2_RawData[i] : '',
+                        Lead_3_RawData: vitalData.Lead_3_RawData[i] !== undefined ? vitalData.Lead_3_RawData[i] : '',
+                        Lead_4_RawData: vitalData.Lead_4_RawData[i] !== undefined ? vitalData.Lead_4_RawData[i] : '',
+                        Lead_5_RawData: vitalData.Lead_5_RawData[i] !== undefined ? vitalData.Lead_5_RawData[i] : '',
+                        Lead_6_RawData: vitalData.Lead_6_RawData[i] !== undefined ? vitalData.Lead_6_RawData[i] : '',
+                    };
+                    csvData.push(ecg6row);
+                    break;
+                case 'ECG12':
+                    maxRows = Math.max(vitalData.Lead_1_RawData.length, vitalData.Lead_2_RawData.length, vitalData.Lead_3_RawData.length, vitalData.Lead_4_RawData.length, vitalData.Lead_5_RawData.length, vitalData.Lead_6_RawData.length, vitalData.Lead_7_RawData.length, vitalData.Lead_8_RawData.length, vitalData.Lead_9_RawData.length, vitalData.Lead_10_RawData.length, vitalData.Lead_11_RawData.length, vitalData.Lead_12_RawData.length)
+
+                    const ecg12row = {
+                        SensePatientID: i === 0 ? vitalData.SensePatientID : '',
+                        DeviceID: i === 0 ? vitalData.DeviceID : '',
+                        Date: i === 0 ? vitalData.Date : '',
+                        Time: i === 0 ? vitalData.Time : '',
+                        Lead_1_RawData: vitalData.Lead_1_RawData[i] !== undefined ? vitalData.Lead_1_RawData[i] : '',
+                        Lead_2_RawData: vitalData.Lead_2_RawData[i] !== undefined ? vitalData.Lead_2_RawData[i] : '',
+                        Lead_3_RawData: vitalData.Lead_3_RawData[i] !== undefined ? vitalData.Lead_3_RawData[i] : '',
+                        Lead_4_RawData: vitalData.Lead_4_RawData[i] !== undefined ? vitalData.Lead_4_RawData[i] : '',
+                        Lead_5_RawData: vitalData.Lead_5_RawData[i] !== undefined ? vitalData.Lead_5_RawData[i] : '',
+                        Lead_6_RawData: vitalData.Lead_6_RawData[i] !== undefined ? vitalData.Lead_6_RawData[i] : '',
+                        Lead_7_RawData: vitalData.Lead_7_RawData[i] !== undefined ? vitalData.Lead_7_RawData[i] : '',
+                        Lead_8_RawData: vitalData.Lead_8_RawData[i] !== undefined ? vitalData.Lead_8_RawData[i] : '',
+                        Lead_9_RawData: vitalData.Lead_9_RawData[i] !== undefined ? vitalData.Lead_9_RawData[i] : '',
+                        Lead_10_RawData: vitalData.Lead_10_RawData[i] !== undefined ? vitalData.Lead_10_RawData[i] : '',
+                        Lead_11_RawData: vitalData.Lead_11_RawData[i] !== undefined ? vitalData.Lead_11_RawData[i] : '',
+                        Lead_12_RawData: vitalData.Lead_12_RawData[i] !== undefined ? vitalData.Lead_12_RawData[i] : '',
+                    };
+                    csvData.push(ecg12row);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        const csv = Papa.unparse(csvData);
+
+        const csvWithBOM = '\ufeff' + csv; // Add BOM character at the beginning
+
+        const csvDataURI = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvWithBOM);
+        const csvLink = document.createElement('a');
+        csvLink.href = csvDataURI;
+        csvLink.download = `${context}-${vitalData.SensePatientID}.csv`;
+        csvLink.click();
+
+    }
 
     return (
 
