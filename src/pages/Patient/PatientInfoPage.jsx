@@ -31,7 +31,7 @@ function PatientInfoPage() {
     return (
         <>
             <Sidebar>
-                <div style={{ backgroundColor: '', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', gap: '10px', padding: '10px 0px 20px 0px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', gap: '10px', padding: '10px 0px 20px 0px' }}>
                     <div className='top_section' style={{ display: 'flex', flexDirection: 'column', width: '45%', height: more ? '500px' : '350px', backgroundColor: 'white', boxShadow: 'rgb(0 0 0 / 16%) 1px 1px 10px', borderRadius: '8px' }}>
                         <div style={{ backgroundColor: '', display: 'flex' }}>
                             <div style={{ backgroundColor: '', width: '70%' }}>

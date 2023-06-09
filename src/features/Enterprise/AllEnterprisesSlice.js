@@ -3,13 +3,13 @@ import axios from 'axios'
 
 
 
-export const allPatientsData = createAsyncThunk(
-    "allPatients/patients",
+export const allEnterpriseData = createAsyncThunk(
+    "allEnterprises/enterprises",
     async (arg, { rejectWithValue }) => {
        
         try {
             
-            const {data} = await axios.get("http://localhost:4004/api/v1/web/patients/all-patients", {
+            const {data} = await axios.get("http://localhost:4004/api/v1/web/enterprises", {
                 ...arg,
             }, {
                 withCredentials: true,
@@ -32,9 +32,9 @@ export const allPatientsData = createAsyncThunk(
 
 
 
-//all patients slice
-export const allPatientsSlice = createSlice({
-    name: "allPatients",
+//all enterprises slice
+export const allEnterprisesSlice = createSlice({
+    name: "allEnterprises",
     initialState: {
         data: [],
         loading: false,
@@ -46,15 +46,15 @@ export const allPatientsSlice = createSlice({
     },
     extraReducers: {
 
-        [allPatientsData.pending]: (state) => {
+        [allEnterpriseData.pending]: (state) => {
             state.loading = true;
         },
-        [allPatientsData.fulfilled]: (state, { payload }) => {
+        [allEnterpriseData.fulfilled]: (state, { payload }) => {
             state.loading = false;
             state.data = payload;
             state.isSuccess = true;
         },
-        [allPatientsData.rejected]: (state, action) => {
+        [allEnterpriseData.rejected]: (state, action) => {
             state.data = action.payload;
             //state.message = action.payload.message;
             state.loading = false;

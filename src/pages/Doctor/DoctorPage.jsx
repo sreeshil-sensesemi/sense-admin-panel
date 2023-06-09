@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import PatientTable from '../../components/AdminPanel/Patient/PatientTable'
+import PatientTable from '../../components/Patient/PatientTable'
 import SearchBar from '../../components/Common/SearchBar'
 import Sidebar from '../../layouts/Sidebar/Sidebar'
 import EnterpriseInfoBox from '../../components/Common/InfoBox'

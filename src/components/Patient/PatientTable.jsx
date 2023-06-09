@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Table from 'react-bootstrap/Table';
-import SearchBar from '../../Common/SearchBar';
+import SearchBar from '../Common/SearchBar';
 import {useNavigate } from 'react-router-dom'
 
 function PatientTable({ data }) {
@@ -25,10 +25,7 @@ function PatientTable({ data }) {
 
     }
 
-    const handlePatientDetails = (id) => {
-        
-        navigate(`/patients/${id}`)
-    }
+    const handlePatientDetails = (id) =>  navigate(`/patients/${id}`)
 
     return (
         <>
@@ -58,8 +55,6 @@ function PatientTable({ data }) {
                             :
                             <p>Patient Not Found</p>
                         }
-
-
                     </tbody>
                 </Table>
             </div>
