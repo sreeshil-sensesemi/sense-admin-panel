@@ -1,6 +1,5 @@
 import React from 'react'
 import Table from 'react-bootstrap/Table';
-import { CSVLink } from 'react-csv';
 import { FaFileDownload } from "react-icons/fa";
 import Papa from 'papaparse';
 
@@ -49,8 +48,6 @@ function DeviceVitalTable({ data, context }) {
                 <td>{item.Date}</td>
                 <td>{item.Time}</td>
                 {renderDynamicColumns(item)}
-
-                {/* <td><CSVLink {...csvReport}>CSV</CSVLink></td> */}
             </tr>
         ));
     };
@@ -134,10 +131,32 @@ function DeviceVitalTable({ data, context }) {
 
         const csvData = [];
         let maxRows;
+        switch (context) {
+            case 'BP':
+                maxRows = Math.max(vitalData.BP_PPG_RED_RawData.length, vitalData.BP_ECG_L1_RawData.length)
+                break;
+            case 'SPO2':
+                maxRows = Math.max(vitalData.PPGRED_RawData.length, vitalData.PPGIR_RawData.length)
+                break;
+            case 'ECG1':
+                maxRows = Math.max(vitalData.RawData.length)
+                break;
+            case 'ECG6':
+                maxRows = Math.max(vitalData.Lead_1_RawData.length, vitalData.Lead_2_RawData.length, vitalData.Lead_3_RawData.length, vitalData.Lead_4_RawData.length, vitalData.Lead_5_RawData.length, vitalData.Lead_6_RawData.length)
+                break;
+            case 'ECG12':
+                maxRows = Math.max(vitalData.Lead_1_RawData.length, vitalData.Lead_2_RawData.length, vitalData.Lead_3_RawData.length, vitalData.Lead_4_RawData.length, vitalData.Lead_5_RawData.length, vitalData.Lead_6_RawData.length, vitalData.Lead_7_RawData.length, vitalData.Lead_8_RawData.length, vitalData.Lead_9_RawData.length, vitalData.Lead_10_RawData.length, vitalData.Lead_11_RawData.length, vitalData.Lead_12_RawData.length)
+                break;
+
+            default:
+                maxRows = [];
+                break;
+        }
+
+
         for (let i = 0; i < maxRows; i++) {
             switch (context) {
                 case 'BP':
-                     maxRows = Math.max(vitalData.BP_PPG_RED_RawData.length, vitalData.BP_ECG_L1_RawData.length);
 
                     const bprow = {
                         SensePatientID: i === 0 ? vitalData.SensePatientID : '',
@@ -152,7 +171,7 @@ function DeviceVitalTable({ data, context }) {
                     csvData.push(bprow);
                     break;
                 case 'SPO2':
-                    maxRows = Math.max(vitalData.PPGRED_RawData.length, vitalData.PPGIR_RawData.length)
+
                     const spo2row = {
                         SensePatientID: i === 0 ? vitalData.SensePatientID : '',
                         DeviceID: i === 0 ? vitalData.DeviceID : '',
@@ -165,7 +184,6 @@ function DeviceVitalTable({ data, context }) {
                     csvData.push(spo2row);
                     break;
                 case 'ECG1':
-                    maxRows = Math.max(vitalData.RawData.length)
 
                     const ecg1row = {
                         SensePatientID: i === 0 ? vitalData.SensePatientID : '',
@@ -177,7 +195,6 @@ function DeviceVitalTable({ data, context }) {
                     csvData.push(ecg1row);
                     break;
                 case 'ECG6':
-                    maxRows = Math.max(vitalData.Lead_1_RawData.length, vitalData.Lead_2_RawData.length, vitalData.Lead_3_RawData.length, vitalData.Lead_4_RawData.length, vitalData.Lead_5_RawData.length, vitalData.Lead_6_RawData.length)
 
                     const ecg6row = {
                         SensePatientID: i === 0 ? vitalData.SensePatientID : '',
@@ -194,7 +211,6 @@ function DeviceVitalTable({ data, context }) {
                     csvData.push(ecg6row);
                     break;
                 case 'ECG12':
-                    maxRows = Math.max(vitalData.Lead_1_RawData.length, vitalData.Lead_2_RawData.length, vitalData.Lead_3_RawData.length, vitalData.Lead_4_RawData.length, vitalData.Lead_5_RawData.length, vitalData.Lead_6_RawData.length, vitalData.Lead_7_RawData.length, vitalData.Lead_8_RawData.length, vitalData.Lead_9_RawData.length, vitalData.Lead_10_RawData.length, vitalData.Lead_11_RawData.length, vitalData.Lead_12_RawData.length)
 
                     const ecg12row = {
                         SensePatientID: i === 0 ? vitalData.SensePatientID : '',
@@ -237,36 +253,6 @@ function DeviceVitalTable({ data, context }) {
     return (
 
         <div style={{ overflowX: 'auto', backgroundColor: 'white', boxShadow: 'rgb(0 0 0 / 16%) 1px 1px 10px', padding: '20px', borderRadius: '8px' }}>
-            {/* <Table striped size="sm" >
-                <thead>
-                    <tr>
-                        <th>SensePatient ID</th>
-                        <th>Device ID</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Systolic BP</th>
-                        <th>Diastolic BP</th>
-                        <th>BP-PPG-RED</th>
-                        <th>BP-ECG-L1</th>
-                        <th>Download</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style={{ cursor: 'pointer' }}>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><button style={{ color: 'white', padding: '2px 12px', borderRadius: '8px', backgroundColor: 'green', outline: 'none', border: 'none' }}>CSV</button></td>
-                        <td><CSVLink {...csvReport}>CSV</CSVLink></td>
-                    </tr>
-                </tbody>
-            </Table> */}
-
             <Table striped size="sm" >
                 <thead>{renderTableHeader()}</thead>
                 <tbody>{renderTableRows(data)}</tbody>

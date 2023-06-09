@@ -17,7 +17,7 @@ export const allPatientsData = createAsyncThunk(
 
             //   } else {
           
-            //     const data  = await axios.get("http://localhost:4004/api/v1/web/patients/get-all-patients", {
+            //     const data  = await axios.get("http://localhost:4004/api/v1/web/patients/all-patients", {
             //       ...arg,
             //     }, {
             //       withCredentials: true,
@@ -26,7 +26,7 @@ export const allPatientsData = createAsyncThunk(
             //     return data;
             //   }
 
-            const {data} = await axios.get("http://localhost:4004/api/v1/web/patients/get-all-patients", {
+            const {data} = await axios.get("http://localhost:4004/api/v1/web/patients/all-patients", {
                 ...arg,
             }, {
                 withCredentials: true,

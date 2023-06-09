@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../../layouts/Sidebar/Sidebar'
 import DeviceVitalTable from './DeviceVitalTable'
 import { useSelector, useDispatch } from 'react-redux';
-import { deviceVitalData,reset } from '../../features/Patients/DeviceVitalsSlice';
+import { deviceVitalData, reset } from '../../features/Patients/DeviceVitalsSlice';
 import { useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 function DeviceVitalPage() {
 
@@ -20,9 +21,19 @@ function DeviceVitalPage() {
 
     const { data } = useSelector((state) => state.deviceVitals)
 
+    if (data.Status == 'failure') {
+        toast.error(data.Message, {
+            id: 'NoVitalDataErr',
+            duration: 200
+        })
+    }
+
     useEffect(() => {
         dispatch(deviceVitalData({ id, context: 'BP' }))
-    }, [])
+
+
+
+    }, [data])
 
 
 
@@ -85,12 +96,11 @@ function DeviceVitalPage() {
                         <div className='ecg6_card' onClick={handleEcg6} style={{ backgroundColor: ecg6 ? '#00A8CA' : 'white', color: ecg6 ? 'white' : '#00A8CA', width: '100px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', cursor: 'pointer' }}>ECG 6</div>
                         <div className='ecg12_card' onClick={handleEcg12} style={{ backgroundColor: ecg12 ? '#00A8CA' : 'white', color: ecg12 ? 'white' : '#00A8CA', width: '100px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', cursor: 'pointer' }}>ECG 12</div>
                     </div>
-
-                    {data && data.Data && <DeviceVitalTable data={data.Data} context={bp ? 'BP' : (spo2? 'SPO2': (ecg1? 'ECG1': (ecg6? 'ECG6': (ecg12?'ECG12': ''))))} /> }
+                    {data && data.Data && <DeviceVitalTable data={data.Data} context={bp ? 'BP' : (spo2 ? 'SPO2' : (ecg1 ? 'ECG1' : (ecg6 ? 'ECG6' : (ecg12 ? 'ECG12' : ''))))} />}
                 </div>
             </Sidebar>
         </>
     )
 }
 
-export default DeviceVitalPage
+export default DeviceVitalPage;
