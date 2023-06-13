@@ -3,20 +3,19 @@ import axios from 'axios'
 
 
 
-export const allEnterpriseData = createAsyncThunk(
-    "allEnterprises/enterprises",
+export const totalCounts = createAsyncThunk(
+    "totalCounts/admin",
     async (arg, { rejectWithValue }) => {
        
         try {
             
-            const {data} = await axios.get("http://localhost:4003/api/v1/web/enterprises", {
+            const {data} = await axios.get("http://localhost:4003/api/v1/web/admin/total-counts", {
                 ...arg,
             }, {
                 withCredentials: true,
             })
-            // console.log(data);
+            
             return data;
-
 
         } catch (error) {
             // console.log(error);
@@ -32,9 +31,9 @@ export const allEnterpriseData = createAsyncThunk(
 
 
 
-//all enterprises slice
-export const allEnterprisesSlice = createSlice({
-    name: "allEnterprises",
+//all patients slice
+export const totalCountsSlice = createSlice({
+    name: "totalCounts",
     initialState: {
         data: [],
         loading: false,
@@ -46,15 +45,15 @@ export const allEnterprisesSlice = createSlice({
     },
     extraReducers: {
 
-        [allEnterpriseData.pending]: (state) => {
+        [totalCounts.pending]: (state) => {
             state.loading = true;
         },
-        [allEnterpriseData.fulfilled]: (state, { payload }) => {
+        [totalCounts.fulfilled]: (state, { payload }) => {
             state.loading = false;
             state.data = payload;
             state.isSuccess = true;
         },
-        [allEnterpriseData.rejected]: (state, action) => {
+        [totalCounts.rejected]: (state, action) => {
             state.data = action.payload;
             //state.message = action.payload.message;
             state.loading = false;

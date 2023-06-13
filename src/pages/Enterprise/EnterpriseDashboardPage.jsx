@@ -37,7 +37,7 @@ function EnterpriseDashboardPage() {
       <Sidebar>
         <div style={{ width: '100%', height: '100%', padding: '30px 0px 30px 0px' }}>
           <InfoBox text={'Enterprises'} count={data && data.Data ? data.Data.length : 0} Icon={FaHospital} />
-          <EnterpriseTable data={data ? data.Data : []}/>
+          <EnterpriseTable data={data ? data.Data : []} />
         </div>
       </Sidebar>
     </>

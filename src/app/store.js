@@ -3,12 +3,16 @@ import { loginSlice } from '../features/WebUser/loginSlice'
 import { allPatientsSlice } from '../features/Patients/AllPatientsSlice'
 import { deviceVitalsSlice } from '../features/Patients/DeviceVitalsSlice'
 import { allEnterprisesSlice } from '../features/Enterprise/AllEnterprisesSlice'
+import { allDoctorsSlice } from '../features/Doctor/AllDoctorsSlice'
+import { totalCountsSlice } from '../features/Admin/TotalCountsSlice'
 
 export const store = configureStore({
   reducer: {
     userLogin: loginSlice.reducer,
     allPatients: allPatientsSlice.reducer,
     deviceVitals: deviceVitalsSlice.reducer,
-    allEnterprises: allEnterprisesSlice.reducer
+    allEnterprises: allEnterprisesSlice.reducer,
+    allDoctors: allDoctorsSlice.reducer,
+    totalCounts: totalCountsSlice.reducer,
   },
 })

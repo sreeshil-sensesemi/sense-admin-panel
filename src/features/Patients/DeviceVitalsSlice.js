@@ -14,12 +14,12 @@ export const deviceVitalData = createAsyncThunk(
 
         try {
 
-            const { data } = await axios.get(`http://localhost:4004/api/v1/web/device-vitals/?sensepatientid=${arg.id}&context=${arg.context}`, {
+            const { data } = await axios.get(`http://localhost:4003/api/v1/web/device-vitals/?sensepatientid=${arg.id}&context=${arg.context}`, {
                 ...arg,
             }, {
                 withCredentials: true,
             })
-
+        
             return data;
 
         } catch (error) {

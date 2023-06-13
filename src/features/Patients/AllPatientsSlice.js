@@ -9,7 +9,7 @@ export const allPatientsData = createAsyncThunk(
        
         try {
             
-            const {data} = await axios.get("http://localhost:4004/api/v1/web/patients/all-patients", {
+            const {data} = await axios.get("http://localhost:4003/api/v1/web/patients/all-patients", {
                 ...arg,
             }, {
                 withCredentials: true,
