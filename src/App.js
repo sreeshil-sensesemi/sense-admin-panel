@@ -10,6 +10,7 @@ import DoctorDashboardPage from './pages/Doctor/DoctorDashboardPage';
 import PatientInfoPage from './pages/Patient/PatientInfoPage';
 import DeviceVitalPage from './pages/Patient/DeviceVitalPage';
 import EnterpriseInfoPage from './pages/Enterprise/EnterpriseInfoPage';
+import EntetprisePatientsPage from './pages/Enterprise/EnterprisePatientsPage';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path='/patients/:id' element={<PatientInfoPage />} />
         <Route path='/patients/sense-vitals/:id' element={<DeviceVitalPage />} />
         <Route path='/enterprises/:id' element={<EnterpriseInfoPage />} />
+        <Route path='/enterprises/patients/:id' element={<EntetprisePatientsPage />} />
       </Routes>
 
     </>

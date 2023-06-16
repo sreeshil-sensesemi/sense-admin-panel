@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from 'axios'
 
-
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const allDoctorsData = createAsyncThunk(
     "allDoctors/doctors",
@@ -9,7 +9,7 @@ export const allDoctorsData = createAsyncThunk(
 
         try {
 
-            const { data } = await axios.get("http://localhost:4003/api/v1/web/doctors/all-doctors", {
+            const { data } = await axios.get(`${BASE_URL}/doctors/all-doctors`, {
                 ...arg,
             }, {
                 withCredentials: true,

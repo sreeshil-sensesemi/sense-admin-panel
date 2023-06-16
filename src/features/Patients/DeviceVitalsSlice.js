@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from 'axios'
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 const initialState = {
     data: [],
     loading: false,
@@ -14,7 +16,7 @@ export const deviceVitalData = createAsyncThunk(
 
         try {
 
-            const { data } = await axios.get(`http://localhost:4003/api/v1/web/device-vitals/?sensepatientid=${arg.id}&context=${arg.context}`, {
+            const { data } = await axios.get(`${BASE_URL}/device-vitals/?sensepatientid=${arg.id}&context=${arg.context}`, {
                 ...arg,
             }, {
                 withCredentials: true,

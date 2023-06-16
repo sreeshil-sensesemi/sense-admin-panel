@@ -39,7 +39,7 @@ function PatientInfoPage() {
                             </div>
                             <div style={{ backgroundColor: '', display: 'flex', flexDirection: 'column', gap: '5px' }}>
                                 <button onClick={handleDeviceVitals} style={{ color: 'white', padding: '2px 12px', borderRadius: '8px', backgroundColor: '#00A8CA', outline: 'none', border: 'none' }}>SenseH Vitals</button>
-                                <button onClick={handleOtherVitals} style={{ color: 'white', padding: '2px 12px', borderRadius: '8px', backgroundColor: '#00A8CA', outline: 'none', border: 'none' }}>Other Vitals</button>
+                                {/* <button onClick={handleOtherVitals} style={{ color: 'white', padding: '2px 12px', borderRadius: '8px', backgroundColor: '#00A8CA', outline: 'none', border: 'none' }}>Other Vitals</button> */}
                             </div>
                         </div>
                         <hr style={{ width: '100%', color: '#00A8CA' }} />

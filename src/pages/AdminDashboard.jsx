@@ -18,7 +18,7 @@ function AdminDashboard() {
   }, []);
 
   const { data } = useSelector((state) => state.totalCounts);
-  console.log(data);
+  
 
   return (
     <>

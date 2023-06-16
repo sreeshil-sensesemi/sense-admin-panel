@@ -250,7 +250,8 @@ function DeviceVitalTable({ data, context }) {
             const csvDataURI = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvWithBOM);
             const csvLink = document.createElement('a');
             csvLink.href = csvDataURI;
-            csvLink.download = `${context}-${vitalData.SensePatientID}.csv`;
+            const clientID = vitalData ? vitalData.SensePatientID.slice(0,5) : '000'
+            csvLink.download = `${context}-${clientID}-${vitalData.Date}-${vitalData.Time}.csv`;
             csvLink.click();
 
         } else {

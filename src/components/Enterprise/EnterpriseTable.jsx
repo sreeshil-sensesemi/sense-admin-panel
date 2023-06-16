@@ -32,7 +32,7 @@ function EnterpriseTable({ data }) {
     return (
         <>
             <SearchBar placeholder={'Enterprise ID'} onSearchValueChange={handleSearchValueChange} />
-            <div style={{ backgroundColor: 'white', boxShadow: 'rgb(0 0 0 / 16%) 1px 1px 10px',margin:'auto', width: '900px', padding: '30px', borderRadius: '8px' }}>
+            <div style={{border: '2px solid #00A8CA', backgroundColor: 'white', boxShadow: 'rgb(0 0 0 / 16%) 1px 1px 10px',margin:'auto', width: '900px', padding: '30px', borderRadius: '8px' }}>
                 <Table striped size="sm">
                     <thead>
                         <tr>

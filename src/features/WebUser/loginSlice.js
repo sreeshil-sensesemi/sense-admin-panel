@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from 'axios'
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 
 export const userLoginData = createAsyncThunk(
@@ -10,7 +11,7 @@ export const userLoginData = createAsyncThunk(
 
       if (arg.token) {
 
-        const { data } = await axios.post("http://localhost:4004/api/v1/web/user/login", {},
+        const { data } = await axios.post(`${BASE_URL}/user/login`, {},
           { headers: { 'authorization': `Bearer ${arg.token}` } })
 
         //console.log(data);
@@ -19,7 +20,7 @@ export const userLoginData = createAsyncThunk(
 
       } else {
 
-        const {data}  = await axios.post("http://localhost:4003/api/v1/web/user/login", {
+        const {data}  = await axios.post(`${BASE_URL}/user/login`, {
           ...arg,
         }, {
           withCredentials: true,
